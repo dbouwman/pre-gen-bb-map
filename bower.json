@@ -1,0 +1,21 @@
+{
+  "name": "pre-gen-bb-map",
+  "version": "0.0.1",
+    "authors": [
+    "Dave Bouwman <dave@davebouwman.com>"
+  ],
+  "keywords": [
+    "esri",
+    "map",
+    "backbone",
+    "marionette"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "sass-bootstrap": "~3.0.0",
+    "jquery": "~1.9.0",
+    "marionette": "~1.6.4",
+    "modernizr": "~2.6.2"
+  },
+  "devDependencies": {}
+}
