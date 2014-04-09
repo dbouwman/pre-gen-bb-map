@@ -58,13 +58,13 @@ module.exports = function (grunt) {
             //compile templates when they change
             jst: {
                 files: [
-                    '<%= yeoman.app %>/scripts/templates/*.jst'
+                    '<%= yeoman.app %>/scripts/**/*.ejs'
                 ],
                 tasks: ['jst']
             },
             //any time a js file changes, lint, active, all
             test: {
-                files: ['<%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js'],
+                files: ['<%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js', '!<%= yeoman.app %>/scripts/templates.js'],
                 tasks: ['watch-task']
             }
         },
@@ -187,7 +187,10 @@ module.exports = function (grunt) {
             active:{
                 src: ['./app/scripts/**/*.js'],
                 options: {
-                  helpers: './test/helpers/*.js',
+                  helpers: [
+                    './test/helpers/*.js', 
+                    './test/bower_components/jasmine-jquery/lib/jasmine-query.js'
+                  ],
                   template:'./test/runner.tmpl',
                   vendor:[
                     './scripts/vendor/**/*/js',
@@ -203,7 +206,9 @@ module.exports = function (grunt) {
                 src: ['./app/scripts/**/*.js'],
         
                 options: {
-                  helpers: './test/helpers/*.js',
+                  helpers: ['./test/helpers/*.js', 
+                            './test/bower_components/jasmine-jquery/lib/jasmine-query.js'
+                    ],
                   template : require('grunt-template-jasmine-istanbul'),
                   templateOptions: {
                     template: './test/runner.tmpl',
@@ -224,11 +229,15 @@ module.exports = function (grunt) {
                     ]
                   },
                   vendor:[
-                    './scripts/vendor/**/*/js'
+                    './scripts/vendor/**/*/js',
+                    './app/bower_components/jquery/jquery.min.js',
+                    './app/bower_components/underscore/underscore.js',
+                    './app/bower_components/backbone/backbone.js',
+                    './app/bower_components/marionette/lib/backbone.marionette.min.js',
                   ],
                   keepRunner: true,
                   specs: [
-                    './test/**/*.spec'                
+                    './test/**/*.spec.js'                
                   ]
                 }
             }
@@ -328,9 +337,16 @@ module.exports = function (grunt) {
             }
         },
         jst: {
+
             compile: {
+                options:{
+                    prettify: true,
+                    processName: function(filePath){
+                        return filePath.replace(/app\//,'');
+                    }
+                },
                 files: {
-                    '.tmp/scripts/templates.js': ['<%= yeoman.app %>/scripts/templates/*.ejs']
+                    '<%= yeoman.app %>/scripts/templates.js': ['<%= yeoman.app %>/scripts/**/*.ejs']
                 }
             }
         },
@@ -355,6 +371,7 @@ module.exports = function (grunt) {
     //pull in the active specs array into the config object
     var activeSpecs = require('./test/active-specs.js');
     grunt.util._.extend(config.jasmine.active.options, activeSpecs);
+    grunt.log.warn(JSON.stringify(config.jasmine.active));
     //initialize grunt
     grunt.initConfig(config);
 

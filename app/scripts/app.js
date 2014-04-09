@@ -17,7 +17,7 @@ if (!this.AppName || typeof this.AppName !== 'object') {
      * History to manage our routes.
      */
     AppName.on('initialize:after', function(){
-        
+        console.log('AppName initialization:after');
         AppName.startHistory();
         //if the current route is empty, then fire the home route
         if(this.getCurrentRoute() === ''){
@@ -48,7 +48,11 @@ if (!this.AppName || typeof this.AppName !== 'object') {
     });
 
     AppName.on('initialize:before', function(){
-
+      console.log('AppName initialization:before');
+      //handle browsers w/o push state by re-directing to the root 
+      //route with a # in the path. Not an issue for this starter-kit
+      //but if you serve this from a backend like rails, node or asp.net
+      //then this may be more of an issue
       if (!Modernizr.history) {
         //if they are using a browser that does not support pushstate
         if (!window.location.hash && window.location.pathname.length > 1) {
@@ -75,6 +79,14 @@ if (!this.AppName || typeof this.AppName !== 'object') {
     });
 
 
+    /**
+     * Handler allowing controller to get the default region from
+     * the application, eliminating the need to pass a region into
+     * a controller
+     */
+    AppName.reqres.setHandler("default:region", function(){
+            return AppName.mainRegion;
+    });
    
     /**
      * Create is called as part of the constructor of a marionette application.
@@ -112,6 +124,11 @@ if (!this.AppName || typeof this.AppName !== 'object') {
           AppName.state.map.initialExtentJson = {'xmin':-35046071,'ymin':-3522218,'xmax':39507548,'ymax':8218509,'spatialReference':{'wkid':102100}};
         }
         
+        /**
+         * Allow a root route to be passed in, othewise
+         * set it to home
+         */
+        AppName.rootroute = '' || options.rootroute;
 
         /**
         * Setup the main regions. These must be present in ALL pages 
@@ -123,7 +140,7 @@ if (!this.AppName || typeof this.AppName !== 'object') {
         */
         AppName.addRegions({
             headerRegion: '#header',
-            mainRegion: '#main-region-not'
+            mainRegion: '#page-region'
         });
 
 
