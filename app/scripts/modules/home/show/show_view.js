@@ -11,7 +11,7 @@ if (!this.AppName || typeof this.AppName !== 'object') {
      */
     Show.View = Backbone.Marionette.ItemView.extend({
       
-      template: 'home/show/show_view.ejs',
+      template: 'home/show/show_view.jst',
 
       /*
       Initializer called when the view is created

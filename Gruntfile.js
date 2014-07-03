@@ -51,14 +51,14 @@ module.exports = function (grunt) {
                     '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
                     '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-                    '<%= yeoman.app %>/scripts/templates/*.{ejs,mustache,hbs}',
+                    '<%= yeoman.app %>/scripts/templates/*.{jst,mustache,hbs}',
                     'test/spec/**/*.js'
                 ]
             },
             //compile templates when they change
             jst: {
                 files: [
-                    '<%= yeoman.app %>/scripts/**/*.ejs'
+                    '<%= yeoman.app %>/scripts/**/*.jst'
                 ],
                 tasks: ['jst']
             },
@@ -175,14 +175,14 @@ module.exports = function (grunt) {
                 'test/spec/{,*/}*.js'
             ]
         },
-        mocha: {
-            all: {
-                options: {
-                    run: true,
-                    urls: ['http://localhost:<%= connect.test.options.port %>/index.html']
-                }
-            }
-        },
+        // mocha: {
+        //     all: {
+        //         options: {
+        //             run: true,
+        //             urls: ['http://localhost:<%= connect.test.options.port %>/index.html']
+        //         }
+        //     }
+        // },
         jasmine: {
             active:{
                 src: ['./app/scripts/**/*.js'],
@@ -337,7 +337,6 @@ module.exports = function (grunt) {
             }
         },
         jst: {
-
             compile: {
                 options:{
                     prettify: true,
@@ -346,7 +345,7 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    '<%= yeoman.app %>/scripts/templates.js': ['<%= yeoman.app %>/scripts/**/*.ejs']
+                    '<%= yeoman.app %>/scripts/compiled-templates.js': ['<%= yeoman.app %>/scripts/**/*.jst']
                 }
             }
         },
@@ -371,7 +370,7 @@ module.exports = function (grunt) {
     //pull in the active specs array into the config object
     var activeSpecs = require('./test/active-specs.js');
     grunt.util._.extend(config.jasmine.active.options, activeSpecs);
-    grunt.log.warn(JSON.stringify(config.jasmine.active));
+    grunt.log.warn(JSON.stringify(config.jst));
     //initialize grunt
     grunt.initConfig(config);
 
