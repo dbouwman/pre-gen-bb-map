@@ -234,8 +234,9 @@
         //Simple wrapper for starting the history
         startHistory: function(){
             if(Backbone.history){
+                console.log('Hisotry Started w/o push state');
                 //todo: add check for pushstate support
-                Backbone.history.start({ pushState: Modernizr.history });
+                Backbone.history.start({ pushState: false });
             }
         },
 

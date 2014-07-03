@@ -58,7 +58,7 @@ module.exports = function (grunt) {
             //compile templates when they change
             jst: {
                 files: [
-                    '<%= yeoman.app %>/scripts/**/*.jst'
+                    '<%= yeoman.app %>/scripts/**/*.jst.html'
                 ],
                 tasks: ['jst']
             },
@@ -345,7 +345,7 @@ module.exports = function (grunt) {
                     }
                 },
                 files: {
-                    '<%= yeoman.app %>/scripts/compiled-templates.js': ['<%= yeoman.app %>/scripts/**/*.jst']
+                    '<%= yeoman.app %>/lib/compiled-templates.js': ['<%= yeoman.app %>/scripts/**/*.jst.html']
                 }
             }
         },

@@ -75,7 +75,7 @@ if (!this.AppName || typeof this.AppName !== 'object') {
      *  
      */
     AppName.addRegions({
-        mainRegion: '#main-region'
+        pageRegion: '#page-region'
     });
 
 
@@ -85,7 +85,7 @@ if (!this.AppName || typeof this.AppName !== 'object') {
      * a controller
      */
     AppName.reqres.setHandler("default:region", function(){
-            return AppName.mainRegion;
+        return AppName.pageRegion;
     });
    
     /**
@@ -110,9 +110,6 @@ if (!this.AppName || typeof this.AppName !== 'object') {
         if(options.inlinedData){
             this.inlinedData = options.inlinedData;
         }
-
-       
-
 
         /**
          * Retain passed in map extent
@@ -143,13 +140,6 @@ if (!this.AppName || typeof this.AppName !== 'object') {
             mainRegion: '#page-region'
         });
 
-
-        /**
-         * the rails environment is passed in so we can take 
-         * different action based on DEVELOPMENT vs PRODUCTION
-         * @property {string}
-         */
-        AppName.environment = options.environment || 'development';
 
         //Default log level
         /**

@@ -38,11 +38,8 @@ if (!this.AppName || typeof this.AppName !== 'object') {
 
             about: function(options){
                 console.log('HomeModule.API.about');
-                if(!this.aboutController){
-                  this.aboutController = new AboutModule.Show.Controller(options);
-                }
-
-                this.aboutController.initUi(options);
+                this.aboutController = new HomeModule.About.Controller(options);
+                
             }
         };
 

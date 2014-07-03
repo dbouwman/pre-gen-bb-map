@@ -4,20 +4,20 @@ if (!this.AppName || typeof this.AppName !== 'object') {
 }
 (function () {
   'use strict';
-  AppName.module('HomeModule.Show', function (Show, App, Backbone, Marionette, $, _) {
+  AppName.module('HomeModule.About', function (About, App, Backbone, Marionette, $, _) {
 
     /*
-     * Home/Show/View
+     * Home/About/View
      */
-    Show.View = Backbone.Marionette.ItemView.extend({
+    About.View = Backbone.Marionette.ItemView.extend({
       
-      template: 'home/show/show_view.jst.html',
+      template: 'home/about/about_view.jst.html',
 
       /*
       Initializer called when the view is created
        */
       initialize: function(options){
-        console.log('HomeModule.Show.View initializing');
+        console.log('HomeModule.About.View initializing');
       }
 
     });
