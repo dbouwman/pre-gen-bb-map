@@ -22,6 +22,25 @@ if (!this.AppName || typeof this.AppName !== 'object') {
                 //Add application logic to spin up the page. 
                 //Usually this involves fetching models, and initializing views
                 this.view = new Show.View();
+                
+                this.view.on('show', function(){
+                    console.log('View Show');
+                    App.request('map:create', {mapdiv:'map'}).then(function(){
+                    //do things after the map is created
+                    });
+                });
+                this.region.on('show', function(view){
+                    console.log('Region Show ', view);
+                });
+                this.region.on('before:show', function(view){
+                    console.log('Region before:show ', view);
+                });
+                this.region.on('before:swap', function(view){
+                    console.log('Region before:swap ', view);
+                });
+                this.region.on('swap', function(view){
+                    console.log('Region swap ', view);
+                });
                 this.region.show(this.view);
             },
 

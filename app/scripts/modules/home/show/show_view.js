@@ -12,7 +12,12 @@ if (!this.AppName || typeof this.AppName !== 'object') {
     Show.View = Backbone.Marionette.ItemView.extend({
       
       template: 'home/show/show_view.jst.html',
-
+      
+      onRender: function(){
+        // App.request('map:create', {mapdiv:'map'}).then(function(){
+        //   //do things after the map is created
+        // });
+      },
       /*
       Initializer called when the view is created
        */
