@@ -13,9 +13,9 @@
   "license": "MIT",
   "dependencies": {
     "sass-bootstrap": "~3.0.0",
-    "jquery": "~1.9.0",
-    "marionette": "~1.6.4",
-    "modernizr": "~2.6.2"
+    "jquery": "~1.9.1",
+    "marionette": "~2.0.1",
+    "modernizr": "~2.8.3"
   },
   "devDependencies": {
     

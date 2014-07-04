@@ -25,6 +25,10 @@ if (!this.AppName || typeof this.AppName !== 'object') {
         return App.MapController.createMap( options );
     });
 
+    App.commands.setHandler('map:destroy', function(){
+        App.MapController.destroy();
+    });
+
     /**
      * Reset the map to the original state when it loaded
      */
@@ -71,9 +75,9 @@ if (!this.AppName || typeof this.AppName !== 'object') {
       /**
        * Destroy the map if it exists
        */
-      destroy: function(callback){
+      destroy: function(){
         if (this._map) {
-          this._map.destroy();
+          this._map.remove();
         }
       },
 

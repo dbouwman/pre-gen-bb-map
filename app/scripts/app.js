@@ -16,8 +16,8 @@ if (!this.AppName || typeof this.AppName !== 'object') {
      * (i.e. all the other modules are initialized), we then start up
      * History to manage our routes.
      */
-    AppName.on('initialize:after', function(){
-        console.log('AppName initialization:after');
+    AppName.on('start', function(){
+        console.log('AppName start');
         AppName.startHistory();
         //if the current route is empty, then fire the home route
         if(this.getCurrentRoute() === ''){
@@ -47,8 +47,8 @@ if (!this.AppName || typeof this.AppName !== 'object') {
 
     });
 
-    AppName.on('initialize:before', function(){
-      console.log('AppName initialization:before');
+    AppName.on('before:start', function(){
+      console.log('AppName before:start');
       //handle browsers w/o push state by re-directing to the root 
       //route with a # in the path. Not an issue for this starter-kit
       //but if you serve this from a backend like rails, node or asp.net
