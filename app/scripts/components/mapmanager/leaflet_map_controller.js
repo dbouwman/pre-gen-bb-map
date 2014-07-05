@@ -52,6 +52,19 @@ if (!this.AppName || typeof this.AppName !== 'object') {
         App.MapController._showMessage(msg, duration);
     });
 
+    /**
+     * Add a feature layer to the map
+     */
+    App.commands.setHandler('map:add:feature-layer', function(name, url, options){
+        App.MapController._addFeatureLayer(name, url, options);
+    });
+
+    /**
+     * Add a clustered feature layer to the map
+     */
+    App.commands.setHandler('map:add:clustered-feature-layer', function(name, url, options){
+        App.MapController._addClusteredFeatureLayer(name, url, options);
+    });
 
     //The controller - nothing should make calls directly to this, rather the calls
     //should be proxied through the App event busses - commands or requests
@@ -61,16 +74,16 @@ if (!this.AppName || typeof this.AppName !== 'object') {
       mapType: 'leaflet',
 
       initialize: function(options){
-        //_.bindAll(this);
         // a place to store methods called before the map is ready
-        this.methodQueue = [];        
+        this.methodQueue = [];
+        //leaflet does not have a simple way to ask the map for a layer
+        //so, we manage a hash of layers
+        this._layers = {};        
       },
 
+      //Array of callback handlers
       _layerCallbacks: [],
 
-      close: function(){
-          //unhook event handlers
-      },
 
       /**
        * Destroy the map if it exists
@@ -94,21 +107,46 @@ if (!this.AppName || typeof this.AppName !== 'object') {
         var self = this; 
         if(!options){
             options = {
-              mapdiv : 'map'
+              mapdiv : 'map',
+              basemap: 'Topographic',
+              center: [40,-95], 
+              zoom:5
             };
         }
         //make sure we have a div in the page  
         //this._injectMapDiv(options); 
 
-        this._map = L.map(options.mapdiv).setView([37.75, -122.23], 10);
-        //add a default basemap
-        L.esri.basemapLayer('Topographic').addTo(this._map);
+        this._map = L.map(options.mapdiv, {
+          touchZoom:false
+        });
+
+        //set up handler so we can resolve the deferred when
+        //the map is actually ready.
+        this._map.on('load', function(e){
+          deferred.resolve();
+        });
+        //add the basemap
+        L.esri.basemapLayer(options.basemap).addTo(this._map);
+        //set the view
+        this._map.setView(options.center, options.zoom);
+
+        //Active Fire Points http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Wildfire_Activity/MapServer/0
+        //Active Perimeters http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/Wildfire_Activity/MapServer/2
+
+        
+        //  pointToLayer: function (geojson, latlng) {
+        //     return L.marker(latlng, {
+        //       icon: icons[geojson.properties.direction.toLowerCase()]
+        //     });
+        //   },
+        // }).addTo(this._map);
+
 
         //Leaflet is syncronous, but dojo is not
         //so we still use a deferred. 
         //We do not resolve with the map - the map 
         //should remain contained in the map controller
-        deferred.resolve();
+
 
         //add all handlers and proxy to events
         //map.on('layer-add-result', this._onLayerAdded);
@@ -138,7 +176,44 @@ if (!this.AppName || typeof this.AppName !== 'object') {
       //-------- P R I V A T E   F U N C T I O N S --------
       
  
-      
+      _addFeatureLayer: function(name, url, options){
+        //allow the same layer name to be added repeatedly, but 
+        //actually swap out the underlying layer
+        if(this._layers[name]){
+          //may want to add more logic to compare urls or options hashes, to avoid 
+          //re-creating exactly the same layer
+          this._removeLayer(name);
+        }
+
+        //create is and add it
+        this._layers[name] = L.esri.featureLayer(url, options).addTo(this._map);
+        this._layers[name].on('click', function(e){
+          console.log('caught cick!');
+        });
+      },
+
+      _addClusteredFeatureLayer: function(name,url, options){
+        if(this._layers[name]){
+          //may want to add more logic to compare urls or options hashes, to avoid 
+          //re-creating exactly the same layer
+          this._removeLayer(name);
+        }
+
+        //create is and add it
+        this._layers[name] = L.esri.clusteredFeatureLayer(url, options).addTo(this._map);
+        this._layers[name].on('click', function(e){
+          console.log('caught cick!');
+        });
+      },
+
+      _removeLayer: function(name){
+        if(this._layers[name]){
+          //remove the layer, then add it again
+          this._map.removeLayer(this._layers[name]);
+          delete this._layers[name];
+        }
+      },
+
 
       /**
        * Creates an entry in the method queue, excuted once this._map is ready
