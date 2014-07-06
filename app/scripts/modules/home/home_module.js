@@ -8,8 +8,6 @@ if (!this.AppName || typeof this.AppName !== 'object') {
     //Home Module that controls the / and /home routes
     AppName.module('HomeModule', function (HomeModule, App, Backbone, Marionette, $, _) {
         
-
-
         //Router for the module
         HomeModule.Router = Backbone.Marionette.AppRouter.extend({
             appRoutes:{
@@ -28,8 +26,6 @@ if (!this.AppName || typeof this.AppName !== 'object') {
         //Simple API object that provides the implementation for the routes
         HomeModule.API = {
             show: function(options){
-                console.log('HomeModule.API.show');
-                
                 //hold onto the controller so we can access it
                 //in the console as AppName.HomeModule.API.showController
                 this.showController = new HomeModule.Show.Controller(options);
@@ -37,7 +33,8 @@ if (!this.AppName || typeof this.AppName !== 'object') {
             },
 
             about: function(options){
-                console.log('HomeModule.API.about');
+                //hold onto the controller so we can access it
+                //in the console as AppName.HomeModule.API.showController
                 this.aboutController = new HomeModule.About.Controller(options);
                 
             }

@@ -62,6 +62,13 @@ module.exports = function (grunt) {
                 ],
                 tasks: ['jst']
             },
+            js: {
+                files: ['<%= yeoman.app %>/scripts/**/*.js', '!<%= yeoman.app %>/scripts/**/*.{spec,mock}.js'],
+                tasks: ['jshint:all'], //, 'jasmine:active', 'jasmine:alltests'],
+                options: {
+                  livereload: true
+                }
+            },
             //any time a js file changes, lint, active, all
             test: {
                 files: ['<%= yeoman.app %>/scripts/{,*/}*.js', 'test/spec/**/*.js', '!<%= yeoman.app %>/scripts/templates.js'],
@@ -175,14 +182,7 @@ module.exports = function (grunt) {
                 'test/spec/{,*/}*.js'
             ]
         },
-        // mocha: {
-        //     all: {
-        //         options: {
-        //             run: true,
-        //             urls: ['http://localhost:<%= connect.test.options.port %>/index.html']
-        //         }
-        //     }
-        // },
+
         jasmine: {
             active:{
                 src: ['./app/scripts/**/*.js'],
