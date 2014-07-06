@@ -12,14 +12,15 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         
         <!-- build:css(.tmp) styles/main.css -->
-        <link rel="stylesheet" href="lib/leaflet-0.7.3/leaflet.css">
-        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/leaflet.css">
+        <link rel="stylesheet" href="styles/bootstrap.css">
         <link rel="stylesheet" href="styles/home.css">
         <link rel="stylesheet" href="styles/marker-cluster.css">
         <!-- endbuild -->
 
+
         <!-- build:js scripts/vendor/modernizr.js -->
-        <script src="bower_components/modernizr/modernizr.js"></script>
+        <script src="bower_components/modernizr/modernizr.js"></script> 
         <!-- endbuild -->
        
 
@@ -76,9 +77,8 @@
         ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>
     -->
-
-    <!-- build:js scripts/vendor.js -->
-    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- build:js scripts/AppName.js -->
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/backbone/backbone.js"></script>
     <script src="bower_components/marionette/lib/backbone.marionette.js"></script>
@@ -87,32 +87,20 @@
     <script src="lib/leaflet-markercluster/leaflet.markercluster.js"></script>
     <script src="lib/esri-leaflet/0.0.1-beta.5/esri-leaflet-clustered-feature-layer.js"></script>
     <script src="bower_components/sass-bootstrap/js/dropdown.js"></script>
-    <!-- endbuild -->
-
-
-    <!-- build:js({.tmp,app}) scripts/main.js -->
-
+   
+    <script src="lib/compiled-templates.js"></script>
     <script src="scripts/base/overrides/marionette.renderer.js"></script>
-
     <script src="scripts/app.js"></script>
-    
     <script src="scripts/base/application.js"></script>
     <script src="scripts/base/controllers.js"></script>
-
-    <script src="lib/compiled-templates.js"></script>
-
     <script src="scripts/modules/home/home_module.js"></script>
-
     <script src="scripts/components/mapmanager/leaflet_map_controller.js"></script>
-    
     <script src="scripts/modules/home/show/show_controller.js"></script>
     <script src="scripts/modules/home/show/show_mapview.js"></script>
     <script src="scripts/modules/home/show/show_infoview.js"></script>
     <script src="scripts/modules/home/show/show_layout.js"></script>
-
     <script src="scripts/modules/home/about/about_controller.js"></script>
     <script src="scripts/modules/home/about/about_view.js"></script>
-
     <script src="scripts/bootstrapper.js"></script>
 
     <!-- endbuild -->

@@ -183,6 +183,15 @@ module.exports = function (grunt) {
             ]
         },
 
+        'gh-pages':{
+            options: {
+                base: 'dist',
+                message: 'Auto-generated commit by grunt-gh-pages'
+            },
+            src:['**']
+        },
+
+
         jasmine: {
             active:{
                 src: ['./app/scripts/**/*.js'],
@@ -273,7 +282,7 @@ module.exports = function (grunt) {
         },
         usemin: {
             html: ['<%= yeoman.dist %>/{,*/}*.html'],
-            css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+            css: ['<%= yeoman.dist %>/styles/{,*/}*.css','<%= yeoman.dist %>/styles/{,*/}*.css'],
             options: {
                 dirs: ['<%= yeoman.dist %>']
             }
@@ -355,13 +364,14 @@ module.exports = function (grunt) {
                     src: [
                         '<%= yeoman.dist %>/scripts/{,*/}*.js',
                         '<%= yeoman.dist %>/styles/{,*/}*.css',
-                        '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
+                        //'<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
                         '/styles/fonts/{,*/}*.*',
                         'bower_components/sass-bootstrap/fonts/*.*'
                     ]
                 }
             }
-        }
+        },
+        
     };
 
 
@@ -435,4 +445,8 @@ module.exports = function (grunt) {
         'test',
         'build'
     ]);
+    grunt.registerTask("deploy", [
+        'build',
+        'gh-pages',
+      ]); 
 };
